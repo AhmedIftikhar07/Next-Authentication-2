@@ -7,11 +7,23 @@ import { FcGoogle } from 'react-icons/fc';
 import { AiFillGithub } from 'react-icons/ai';
 import { HiAtSymbol,HiFingerPrint } from 'react-icons/hi';
 import { signIn, signOut } from "next-auth/react"
+import { useFormik } from 'formik';
 
 
 function Login() {
     const[show, setShow] = useState(false);
 
+    const formik = useFormik({
+        initialValues: {
+            email:'',
+            password:''
+        },
+        onSubmit
+    })
+
+    async function onSubmit (values){
+        console.log(values);
+    }
     // google handler func
 
     async function handleGoogleSignin(){
@@ -39,13 +51,14 @@ function Login() {
 
             {/* {form} */}
 
-            <form action="" className='flex flex-col gap-5'>
+            <form action="" className='flex flex-col gap-5' onSubmit={formik.handleSubmit}>
                 <div className={Styles.inputGroup}>
                     <input
                         className={Styles.inputText}
                         type="email"
                         name='email'
                         placeholder='Email'
+                        {...formik.getFieldProps('email')}
                         />
                         <span className='icon flex items-center px-4'><HiAtSymbol></HiAtSymbol></span>
                 </div>
@@ -55,6 +68,7 @@ function Login() {
                         type={`${show ? "text": "password"}`}
                         name='password'
                         placeholder='Password'
+                        {...formik.getFieldProps('password')}
                         />
                          <span onClick={()=>{setShow(!show)}} className='icon flex items-center px-4'><HiFingerPrint></HiFingerPrint></span>
                 </div>

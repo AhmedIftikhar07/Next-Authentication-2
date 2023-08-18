@@ -6,10 +6,24 @@ import Styles from '../styles/form.module.css'
 import { FcGoogle } from 'react-icons/fc';
 import { AiFillGithub } from 'react-icons/ai';
 import { HiAtSymbol,HiFingerPrint,HiOutlineUser } from 'react-icons/hi';
+import { useFormik } from 'formik';
 
 
 function Registor() {
   const [show,setShow] = useState({password:false,Cpassword:false})
+
+  const formik = useFormik({
+    initialValues: {
+        Username: '',
+        email:'',
+        password:'',
+        Cpassword:'',
+    },
+    onSubmit
+})
+async function onSubmit (values){
+    console.log(values);
+}
   return (
     <Layout>
         <Head>
@@ -23,13 +37,14 @@ function Registor() {
 
             {/* {form} */}
 
-            <form action="" className='flex flex-col gap-5'>
+            <form action="" className='flex flex-col gap-5' onSubmit={formik.handleSubmit}>
                 <div className={Styles.inputGroup}>
                     <input
                         className={Styles.inputText}
                         type="text"
                         name='Username'
                         placeholder='Username'
+                        {...formik.getFieldProps('Username')}
                         />
                         <span className='icon flex items-center px-4'><HiOutlineUser></HiOutlineUser></span>
                 </div>
@@ -39,6 +54,7 @@ function Registor() {
                         type="email"
                         name='email'
                         placeholder='Email'
+                        {...formik.getFieldProps('email')}
                         />
                         <span className='icon flex items-center px-4'><HiAtSymbol></HiAtSymbol></span>
                 </div>
@@ -48,6 +64,7 @@ function Registor() {
                         type={`${show.password ? "text": "password"}`}
                         name='password'
                         placeholder='Password'
+                        {...formik.getFieldProps('password')}
                         />
                          <span onClick={()=>{setShow({...show, password:!show.password})}} className='icon flex items-center px-4'><HiFingerPrint></HiFingerPrint></span>
                 </div>
@@ -57,6 +74,7 @@ function Registor() {
                         type={`${show.Cpassword ? "text": "password"}`}
                         name='Cpassword'
                         placeholder='Confirm Password'
+                        {...formik.getFieldProps('Cpassword')}
                         />
                          <span onClick={()=>{setShow({...show, Cpassword:!show.Cpassword})}} className='icon flex items-center px-4'><HiFingerPrint></HiFingerPrint></span>
                 </div>
