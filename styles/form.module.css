@@ -1,0 +1,28 @@
+.inputGroup{
+    @apply flex border rounded-xl;
+    position: relative;
+}
+.inputText{
+    @apply w-full py-4 px-6 border rounded-xl bg-slate-50;
+    @apply focus:outline-none border-none
+}
+.button{
+    @apply w-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-md;
+    @apply py-3 text-gray-50 text-lg
+}
+.button:hover{
+    @apply w-full bg-gradient-to-r from-indigo-600 to-purple-600 rounded-md;
+}
+.buttonCustom{
+    @apply w-full border py-3 flex justify-center gap-2 hover:bg-gray-200
+}
+.inputText + *{
+    color: #CBD5E1;
+}
+.inputText:focus + *{
+    color: #4c0082ab;
+}
+.inputText:not([type=email]) ~ span:hover *{
+    color: #4c0082ab;
+    cursor: pointer;
+}
