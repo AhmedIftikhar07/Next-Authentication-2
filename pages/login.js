@@ -8,18 +8,23 @@ import { AiFillGithub } from 'react-icons/ai';
 import { HiAtSymbol,HiFingerPrint } from 'react-icons/hi';
 import { signIn, signOut } from "next-auth/react"
 import { useFormik } from 'formik';
+import login_validate from '@/lib/validate'
 
 
 function Login() {
     const[show, setShow] = useState(false);
 
+    // formik hook
     const formik = useFormik({
         initialValues: {
             email:'',
             password:''
         },
+        validate: login_validate,
         onSubmit
     })
+
+    
 
     async function onSubmit (values){
         console.log(values);
@@ -61,7 +66,9 @@ function Login() {
                         {...formik.getFieldProps('email')}
                         />
                         <span className='icon flex items-center px-4'><HiAtSymbol></HiAtSymbol></span>
+                        
                 </div>
+                {formik.errors.email && formik.touched.email ?<span className='text-rose-500 text-xs'>{formik.errors.email}</span>:<></>}
                 <div className={Styles.inputGroup}>
                     <input
                         className={Styles.inputText}
@@ -72,6 +79,7 @@ function Login() {
                         />
                          <span onClick={()=>{setShow(!show)}} className='icon flex items-center px-4'><HiFingerPrint></HiFingerPrint></span>
                 </div>
+                         {formik.errors.password && formik.touched.password ? <span className='text-rose-500 text-xs'>{formik.errors.password}</span>:<></>}
 
                 {/* {login buttons} */}
 
